@@ -1,12 +1,5 @@
 # Dependencies
 node_modules/
 
-# Generated files
-/*.html
-/assets/
-/blog/
-/about/
-/faq/
-
 # OS files
 .DS_Store
