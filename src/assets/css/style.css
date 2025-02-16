@@ -1,0 +1,246 @@
+/* Modern CSS Reset and Base Styles */
+:root {
+    --primary-color: #2563eb;
+    --text-color: #1f2937;
+    --background-color: #ffffff;
+    --secondary-bg: #f8fafc;
+    --accent-color: #3b82f6;
+    --gray-light: #e5e7eb;
+    --gray-medium: #9ca3af;
+    --max-width: 1100px;
+    --header-height: 4rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Layout */
+header {
+    background-color: var(--background-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 1000;
+}
+
+nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main {
+    max-width: var(--max-width);
+    margin: calc(var(--header-height) + 2rem) auto 2rem;
+    padding: 0 2rem;
+    min-height: calc(100vh - var(--header-height) - 100px);
+}
+
+/* Navigation */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.logo:hover {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    font-size: 1.1rem;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    line-height: 1.2;
+    margin: 1.5rem 0 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+/* Blog Posts */
+.blog-post, .page {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blog-meta {
+    color: var(--gray-medium);
+    margin: 1rem 0 2rem;
+    font-size: 0.95rem;
+}
+
+.blog-preview {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--secondary-bg);
+    border-radius: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.blog-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blog-preview h2 {
+    margin-top: 0;
+}
+
+.blog-preview h2 a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.blog-preview h2 a:hover {
+    color: var(--primary-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--secondary-bg);
+    color: var(--gray-medium);
+    font-size: 0.9rem;
+}
+
+/* Code blocks */
+pre, code {
+    background-color: var(--secondary-bg);
+    border-radius: 0.25rem;
+    font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+code {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.9em;
+}
+
+pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+pre code {
+    padding: 0;
+    background: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 6rem;
+    }
+
+    nav {
+        flex-direction: column;
+        padding: 1rem 2rem;
+    }
+
+    .nav-links {
+        margin-top: 0.5rem;
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .blog-preview {
+        padding: 1.5rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e5e7eb;
+        --background-color: #111827;
+        --secondary-bg: #1f2937;
+        --gray-light: #374151;
+        --gray-medium: #6b7280;
+    }
+
+    .blog-preview:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+} 
