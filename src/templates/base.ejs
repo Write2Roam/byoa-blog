@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%- title %></title>
+    <% if (locals.isSubpage) { %>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <% } else { %>
     <link rel="stylesheet" href="assets/css/style.css">
+    <% } %>
 </head>
 <body>
     <header>
         <nav>
-            <a href="." class="logo">Your Site</a>
+            <a href="<%= locals.isSubpage ? '..' : '.' %>" class="logo">Your Site</a>
             <div class="nav-links">
-                <a href=".">Home</a>
-                <a href="blog">Blog</a>
-                <a href="about">About</a>
-                <a href="faq">FAQ</a>
+                <a href="<%= locals.isSubpage ? '..' : '.' %>">Home</a>
+                <a href="<%= locals.isSubpage ? '../blog' : 'blog' %>">Blog</a>
+                <a href="<%= locals.isSubpage ? '../about' : 'about' %>">About</a>
+                <a href="<%= locals.isSubpage ? '../faq' : 'faq' %>">FAQ</a>
             </div>
         </nav>
     </header>

@@ -37,7 +37,7 @@ async function processMarkdown(content) {
     return { attributes, content: html };
 }
 
-async function buildPage(filePath, template, outputPath) {
+async function buildPage(filePath, template, outputPath, isSubpage = false) {
     const content = await fs.readFile(filePath, 'utf-8');
     const { attributes, content: html } = await processMarkdown(content);
     
@@ -46,6 +46,7 @@ async function buildPage(filePath, template, outputPath) {
         content: html,
         title: attributes.title,
         date: attributes.date,
+        isSubpage,
         ...attributes
     });
 
@@ -74,7 +75,8 @@ async function buildBlog() {
             await buildPage(
                 path.join(blogDir, file),
                 'post.ejs',
-                path.join(DIST_DIR, outputPath.slice(1)) // Remove leading slash
+                path.join(DIST_DIR, outputPath.slice(1)),
+                true // This is a subpage
             );
         }
 
@@ -85,7 +87,7 @@ async function buildBlog() {
         const blogIndexPath = path.join(DIST_DIR, 'blog/index.html');
         const rendered = await ejs.renderFile(
             path.join(SOURCE_DIR, 'templates/blog_index.ejs'),
-            { posts, title: 'Blog' }
+            { posts, title: 'Blog', isSubpage: true }
         );
         await fs.writeFile(blogIndexPath, rendered);
 
@@ -103,18 +105,18 @@ async function buildPages() {
         for (const file of files) {
             if (!file.endsWith('.md')) continue;
 
+            const isIndexPage = file === 'index.md';
             const outputPath = path.join(
                 DIST_DIR,
-                file === 'index.md' 
-                    ? 'index.html'  // Place index.html at root
-                    : `${path.basename(file, '.md')}/index.html`
+                isIndexPage ? 'index.html' : `${path.basename(file, '.md')}/index.html`
             );
             
             await ensureDir(path.dirname(outputPath));
             await buildPage(
                 path.join(pagesDir, file),
                 'page.ejs',
-                outputPath
+                outputPath,
+                !isIndexPage // If it's not the index page, it's a subpage
             );
         }
     } catch (err) {
