@@ -5,7 +5,7 @@ const ejs = require('ejs');
 const frontMatter = require('front-matter');
 
 const SOURCE_DIR = path.join(__dirname, '../src');
-const DIST_DIR = path.join(__dirname, '../dist');
+const DIST_DIR = path.join(__dirname, '..'); // Changed to output at root
 
 async function ensureDir(dir) {
     try {
@@ -74,7 +74,7 @@ async function buildBlog() {
             await buildPage(
                 path.join(blogDir, file),
                 'post.ejs',
-                path.join(DIST_DIR, outputPath)
+                path.join(DIST_DIR, outputPath.slice(1)) // Remove leading slash
             );
         }
 
@@ -105,7 +105,9 @@ async function buildPages() {
 
             const outputPath = path.join(
                 DIST_DIR,
-                file === 'index.md' ? 'index.html' : `${path.basename(file, '.md')}/index.html`
+                file === 'index.md' 
+                    ? 'index.html'  // Place index.html at root
+                    : `${path.basename(file, '.md')}/index.html`
             );
             
             await ensureDir(path.dirname(outputPath));
@@ -123,8 +125,7 @@ async function buildPages() {
 async function build() {
     console.log('🚀 Building site...');
     
-    // Ensure dist directory exists
-    await ensureDir(DIST_DIR);
+    // Ensure directories exist
     await ensureDir(path.join(DIST_DIR, 'blog'));
     
     // Copy assets

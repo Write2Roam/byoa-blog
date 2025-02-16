@@ -4,14 +4,18 @@ const path = require('path');
 const build = require('./build');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
-// Serve static files from dist directory
-app.use(express.static(path.join(__dirname, '../dist')));
+// Serve static files from root directory
+app.use(express.static(path.join(__dirname, '..')));
 
 // Handle routes for known pages
-app.get(['/about', '/faq', '/blog'], (req, res) => {
-    const htmlPath = path.join(__dirname, '../dist', req.path, 'index.html');
+app.get(['/', '/about', '/faq', '/blog'], (req, res) => {
+    const htmlPath = path.join(
+        __dirname, 
+        '..',
+        req.path === '/' ? 'index.html' : `${req.path}/index.html`
+    );
     res.sendFile(htmlPath);
 });
 
