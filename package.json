@@ -1,0 +1,16 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "description": "Simple static site with markdown support",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node -e \"const http=require('http');const fs=require('fs');const path=require('path');const server=http.createServer((req,res)=>{let filePath=path.join('dist',req.url==='/'?'index.html':req.url);filePath=filePath.split('?')[0];fs.readFile(filePath,(err,data)=>{if(err){if(err.code==='ENOENT'&&!filePath.endsWith('.html')){fs.readFile(filePath+'.html',(err2,data2)=>{if(err2){res.writeHead(404);res.end('404 Not Found');}else{res.writeHead(200,{'Content-Type':'text/html'});res.end(data2);}})}else{res.writeHead(404);res.end('404 Not Found');}}else{const ext=path.extname(filePath);const contentType={'.html':'text/html','.css':'text/css','.js':'text/javascript','.png':'image/png','.jpg':'image/jpeg','.gif':'image/gif'}[ext]||'text/plain';res.writeHead(200,{'Content-Type':contentType});res.end(data);}});});server.listen(3000,()=>{console.log('Server running at http://localhost:3000/');});\"",
+    "start": "npm run build && npm run serve"
+  },
+  "dependencies": {
+    "marked": "^9.1.5",
+    "fs-extra": "^11.1.1",
+    "front-matter": "^4.0.2"
+  }
+} 
